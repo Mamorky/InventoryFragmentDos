@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.usuario.inventoryfragment">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.example.usuario.inventoryfragment.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.usuario.inventoryfragment.ui.login.LoginViewImpl"
+            android:theme="@style/LoginTheme" />
+        <activity android:name="com.example.usuario.inventoryfragment.ui.inventory.InventoryActivity" />
+        <activity
+            android:name="com.example.usuario.inventoryfragment.DashBoardActivity"
+            android:theme="@style/ActionBarTheme" />
+        <activity android:name="com.example.usuario.inventoryfragment.ui.product.ProductActivity" />
+        <activity android:name="com.example.usuario.inventoryfragment.ui.dependency.DependencyActivity" />
+        <activity android:name="com.example.usuario.inventoryfragment.ui.sector.SectorActivity" />
+        <activity android:name="com.example.usuario.inventoryfragment.ui.prefs.AccountSettingActivity" />
+        <activity android:name="com.example.usuario.inventoryfragment.ui.prefs.GeneralSettingActivity" />
+        <activity android:name="com.example.usuario.inventoryfragment.ui.about.AboutUsActivity" />
+    </application>
+
+</manifest>
