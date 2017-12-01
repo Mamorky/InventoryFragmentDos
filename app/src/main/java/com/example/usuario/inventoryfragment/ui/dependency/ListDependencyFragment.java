@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.Toolbar;
 
 import com.example.usuario.inventoryfragment.R;
 import com.example.usuario.inventoryfragment.adapters.DependencyAdapter;
@@ -39,7 +40,6 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
     private DependencyAdapter adapter;
     private FloatingActionButton fabAdd;
 
-
     interface ListDependencyListener {
         void addNewDependency();
         void editDependency(Bundle bundle);
@@ -59,6 +59,7 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new DependencyAdapter(getActivity());
+        this.mListPresenter = new ListDependencyPresenter(this);
         setRetainInstance(true);
     }
 
@@ -89,6 +90,7 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
         });
         mListPresenter.loadDependency();
 
+        setHasOptionsMenu(true);
         return root;
     }
 
@@ -106,6 +108,24 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
         });
         //1.- Creación de menu contexual
         registerForContextMenu(getListView());
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_fragment_list_dependency_order,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case  R.id.action_list_depen_order_name:
+                break;
+            case R.id.action_list_depen_order_id:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

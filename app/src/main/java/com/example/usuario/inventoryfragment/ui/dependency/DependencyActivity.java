@@ -53,8 +53,8 @@ public class DependencyActivity extends BaseActivity implements ListDependencyFr
             transaction.replace(android.R.id.content, mAddeditDependency, AddeditDependencyFragment.TAG).commit();
         }
 
-        mAddeditPresenter = new AddeditDependencyPresenter(mAddeditDependency);
-        mAddeditDependency.setPresenter(mAddeditPresenter);
+        //mAddeditPresenter = new AddeditDependencyPresenter(mAddeditDependency);
+        //mAddeditDependency.setPresenter(mAddeditPresenter);
     }
 
     @Override
@@ -71,8 +71,8 @@ public class DependencyActivity extends BaseActivity implements ListDependencyFr
             transaction.replace(android.R.id.content, mAddeditDependency, AddeditDependencyFragment.TAG).commit();
         }
 
-        mAddeditPresenter = new AddeditDependencyPresenter(mAddeditDependency);
-        mAddeditDependency.setPresenter(mAddeditPresenter);
+        //mAddeditPresenter = new AddeditDependencyPresenter(mAddeditDependency);
+        //mAddeditDependency.setPresenter(mAddeditPresenter);
     }
 
     @Override

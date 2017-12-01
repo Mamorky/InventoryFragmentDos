@@ -15,8 +15,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.usuario.inventoryfragment.R;
+import com.example.usuario.inventoryfragment.adapters.DependencyAdapter;
 import com.example.usuario.inventoryfragment.data.db.model.Dependency;
 import com.example.usuario.inventoryfragment.ui.dependency.contracts.AddeditDependencyContract;
+import com.example.usuario.inventoryfragment.ui.dependency.presenters.AddeditDependencyPresenter;
+import com.example.usuario.inventoryfragment.ui.dependency.presenters.ListDependencyPresenter;
 import com.example.usuario.inventoryfragment.ui.utils.AddEdit;
 
 /**
@@ -36,6 +39,13 @@ public class AddeditDependencyFragment extends Fragment implements AddeditDepend
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.presenter = new AddeditDependencyPresenter(this);
+        setRetainInstance(true);
+    }
+
+    @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         callback = (AddeditDependencyListener) activity;
@@ -52,9 +62,12 @@ public class AddeditDependencyFragment extends Fragment implements AddeditDepend
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_addedit_dependency, container, false);
+
+        // Como el fragment mantiene el estado (y solo se elimina la vista) se debe reinicializar el presenter cuando se cree la vista
+
+
         fab = (FloatingActionButton) root.findViewById(R.id.fab_dependencyAdd);
         edtname = (EditText) root.findViewById(R.id.edt_dependency_name);
         edtshortname = (EditText) root.findViewById(R.id.edt_dependency_sortname);
@@ -173,8 +186,8 @@ public class AddeditDependencyFragment extends Fragment implements AddeditDepend
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        presenter.onDestroy();
+    public void onDestroy() {
+        super.onDestroy();
+        presenter = null;
     }
 }

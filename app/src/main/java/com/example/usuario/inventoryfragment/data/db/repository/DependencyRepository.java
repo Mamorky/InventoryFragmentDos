@@ -4,6 +4,7 @@ import com.example.usuario.inventoryfragment.data.db.model.Dependency;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * Repositorio con los datos de Dependency.
@@ -83,7 +84,27 @@ public class DependencyRepository {
         }
     }
 
+    //Alternativa a editDependency
+    public void saveDependency(Dependency d){
+        for(Dependency dependency:dependencies)
+            if(dependency.getName().equals(d.getName()))
+                dependency.setDescription(d.getDescription());
+    }
+
     public void deleteDependency(Dependency dependency){
         dependencies.remove(dependency);
+    }
+
+    //Guiño Guiño
+    public void deleteDependency(int id){
+        Iterator<Dependency> iterator = dependencies.iterator();
+        Dependency dependency;
+        while (iterator.hasNext()){
+            dependency = iterator.next();
+            if(dependency.get_ID() == id){
+                iterator.remove();
+                return;
+            }
+        }
     }
 }

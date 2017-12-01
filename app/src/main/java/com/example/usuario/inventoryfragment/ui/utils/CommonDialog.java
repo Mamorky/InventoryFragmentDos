@@ -29,7 +29,6 @@ public class CommonDialog {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 presenter.deleteDependency(dependency);
-                presenter.loadDependency();
             }
         }).setNegativeButton(R.string.btnCancel, new DialogInterface.OnClickListener() {
             @Override
