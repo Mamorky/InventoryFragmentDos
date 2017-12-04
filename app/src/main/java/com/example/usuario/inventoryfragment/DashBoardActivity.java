@@ -1,6 +1,7 @@
 package com.example.usuario.inventoryfragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayout;
@@ -9,7 +10,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.example.usuario.inventoryfragment.data.prefs.AppPreferencesHelper;
 import com.example.usuario.inventoryfragment.ui.dependency.DependencyActivity;
 import com.example.usuario.inventoryfragment.ui.inventory.InventoryActivity;
 import com.example.usuario.inventoryfragment.ui.prefs.AccountSettingActivity;
@@ -24,6 +27,10 @@ public class DashBoardActivity extends AppCompatActivity {
     private GridLayout gridDashboard;
     private CLickListenerDashboard mListenerDashboard;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +120,12 @@ public class DashBoardActivity extends AppCompatActivity {
 
             if (intent != null)
                 startActivity(intent);
+        }
+
+        private void ShowAppPreferences(){
+            AppPreferencesHelper sharedPreferences = ((InventoryActivity)getApplicationContext()).getAppPreferencesHelper();
+            String message = "Tu usuario de sesión es "+sharedPreferences.getCurrentUserName();
+            Toast.makeText(DashBoardActivity.this,message,Toast.LENGTH_LONG).show();
         }
     }
 }

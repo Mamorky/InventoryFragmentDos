@@ -1,15 +1,19 @@
 package com.example.usuario.inventoryfragment.data.db.repository;
 
+import android.support.annotation.NonNull;
+
 import com.example.usuario.inventoryfragment.data.db.model.Dependency;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.Iterator;
 
 /**
  * Repositorio con los datos de Dependency.
  */
-public class DependencyRepository {
+public class DependencyRepository{
     private ArrayList<Dependency> dependencies;
     private static DependencyRepository instance;
 
@@ -106,5 +110,24 @@ public class DependencyRepository {
                 return;
             }
         }
+    }
+}
+
+class CompararPorID implements Comparator<Dependency>{
+    @Override
+    public int compare(Dependency o1, Dependency o2) {
+        if(o1.get_ID() > o2.get_ID())
+            return 1;
+        else if(o1.get_ID() < o2.get_ID())
+            return -1;
+        else
+            return 0;
+    }
+}
+
+class CompararPorName implements Comparator<Dependency>{
+    @Override
+    public int compare(Dependency o1, Dependency o2) {
+        return o1.getName().compareTo(o2.getName());
     }
 }
