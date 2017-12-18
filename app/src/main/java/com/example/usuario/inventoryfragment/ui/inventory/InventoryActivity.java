@@ -17,6 +17,11 @@ public class InventoryActivity extends Application {
     private AppPreferencesHelper appPreferencesHelper;
     public static SharedPreferences preferences;
 
+
+
+
+
+    
     @Override
     public void onCreate() {
         super.onCreate();

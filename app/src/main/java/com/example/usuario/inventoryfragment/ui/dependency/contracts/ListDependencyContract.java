@@ -20,6 +20,14 @@ public interface ListDependencyContract {
         void loadDependency();
         void onDestroy();
         void deleteDependency(Dependency dependency);
+
+        void removeSelection(int position);
+        void setNewSelection(int position);
+        void deleteSelection();
+
+        void clearSelecion();
+
+        boolean isPositionChecked(int position);
     }
 
     interface Interactor{
@@ -28,5 +36,6 @@ public interface ListDependencyContract {
             void onSuccess(ArrayList<Dependency> dependencies);
         }
         void deleteDependency(Dependency dependency);
+        void deleteDependency(Integer position);
     }
 }

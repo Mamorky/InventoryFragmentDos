@@ -18,4 +18,9 @@ public class ListDependencyInteractor implements ListDependencyContract.Interact
     public void deleteDependency(Dependency dependency) {
         DependencyRepository.getInstance().deleteDependency(dependency);
     }
+
+    @Override
+    public void deleteDependency(Integer position) {
+        DependencyRepository.getInstance().deleteDependency(position);
+    }
 }

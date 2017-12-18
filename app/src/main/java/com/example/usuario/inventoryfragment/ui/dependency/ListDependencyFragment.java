@@ -4,7 +4,6 @@ package com.example.usuario.inventoryfragment.ui.dependency;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -16,9 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.Toolbar;
+import android.widget.ListView;
 
 import com.example.usuario.inventoryfragment.R;
 import com.example.usuario.inventoryfragment.adapters.DependencyAdapter;
@@ -35,7 +33,7 @@ import java.util.ArrayList;
  */
 public class ListDependencyFragment extends ListFragment implements ListDependencyContract.View {
     public static final String TAG = "listdependency";
-    private ListDependencyContract.Presenter mListPresenter;
+    private ListDependencyContract.Presenter presenter;
     private ListDependencyListener mCallback;
     private DependencyAdapter adapter;
     private FloatingActionButton fabAdd;
@@ -59,7 +57,7 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new DependencyAdapter(getActivity());
-        this.mListPresenter = new ListDependencyPresenter(this);
+        this.presenter = new ListDependencyPresenter(this);
         setRetainInstance(true);
     }
 
@@ -88,7 +86,7 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
                 mCallback.addNewDependency();
             }
         });
-        mListPresenter.loadDependency();
+        presenter.loadDependency();
 
         setHasOptionsMenu(true);
         return root;
@@ -106,8 +104,21 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
                 mCallback.editDependency(bundle);
             }
         });
-        //1.- Creación de menu contexual
-        registerForContextMenu(getListView());
+        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+        getListView().setMultiChoiceModeListener(new DependencyMultiChoice((ListDependencyPresenter) presenter));
+
+
+        //Pulsación Larga del elemento
+        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                getListView().setItemChecked(position,!presenter.isPositionChecked(position));
+                return false;
+            }
+        });
+
+        //Registro de menu contexual
+        //registerForContextMenu(getListView());
     }
 
     @Override
@@ -150,7 +161,7 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
                 bundle.putString(CommonDialog.MESSAGE,"Desea eliminar la dependencia");
                 bundle.putString(CommonDialog.TITLE,"Eliminar Dependencia: "+dependencyTmp.getShortname());
                 bundle.putParcelable(CommonDialog.DEPSELECT,dependencyTmp);
-                Dialog dialog = CommonDialog.showConfirmDialog(bundle,getActivity(),mListPresenter);
+                Dialog dialog = CommonDialog.showConfirmDialog(bundle,getActivity(), presenter);
                 dialog.show();
                 break;
             default:
@@ -162,7 +173,7 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
 
     @Override
     public void setPresenter(ListDependencyContract.Presenter presenter) {
-        mListPresenter = presenter;
+        this.presenter = presenter;
     }
 
     @Override

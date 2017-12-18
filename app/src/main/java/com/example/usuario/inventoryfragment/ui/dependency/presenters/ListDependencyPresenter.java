@@ -5,6 +5,7 @@ import com.example.usuario.inventoryfragment.ui.dependency.interactors.ListDepen
 import com.example.usuario.inventoryfragment.ui.dependency.contracts.ListDependencyContract;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by usuario on 23/11/17.
@@ -40,5 +41,39 @@ public class ListDependencyPresenter implements ListDependencyContract.Presenter
     public void deleteDependency(Dependency dependency) {
         interactor.deleteDependency(dependency);
         interactor.loadDependency(this);
+    }
+
+    //Métodos que gestionan la selección multiple de una lista
+    @Override
+    public void deleteSelection() {
+        for(Integer position:selection.keySet()){
+            interactor.deleteDependency(position);
+        }
+    }
+
+    HashMap<Integer,Boolean> selection = new HashMap<>();
+    @Override
+    public void removeSelection(int position) {
+        selection.remove(position);
+    }
+
+    @Override
+    public void setNewSelection(int position) {
+        selection.put(position,true);
+    }
+
+    @Override
+    public void clearSelecion() {
+        selection.clear();
+    }
+
+    /**
+     * Comprobar si el elemento existe en el mapa
+     * @param  position
+     * @return
+     **/
+    @Override
+    public boolean isPositionChecked(int position) {
+        return selection.get(position) == null?false:true;
     }
 }

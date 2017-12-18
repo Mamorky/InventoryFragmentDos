@@ -22,7 +22,7 @@ public class AppPreferencesHelper implements AccountPreferencesHelper,GeneralPre
 
     private AppPreferencesHelper() {
         //Si es el fichero por defecto de las preferencias
-        this.preferences = InventoryActivity
+        this.preferences = InventoryActivity.preferences;
     }
 
     /**
