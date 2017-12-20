@@ -6,10 +6,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <!--Este atributo sirve para que el action mode se situe sobre la ToolBar-->
+        <item name="windowActionModeOverlay">true</item>
+        <item name="actionModeStyle">@style/Widget.ActionMode</item>
     </style>
 
     <style name="LoginTheme" parent="AppTheme">
         <item name="android:textColor">@color/colorPrimaryLogin</item>
+    </style>
+
+    <style name="Widget.ActionMode" parent="Widget.AppCompat.ActionMode">
+        <item name="background">@color/background_action_mode</item>
+        <item name="android:background">@color/background_action_mode</item>
+        <item name="android:actionModeBackground">@color/background_action_mode</item>
+        <item name="actionModeBackground">@color/background_action_mode</item>
     </style>
 
     <style name="ActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">

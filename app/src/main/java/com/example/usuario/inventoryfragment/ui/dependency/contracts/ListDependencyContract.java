@@ -3,6 +3,7 @@ package com.example.usuario.inventoryfragment.ui.dependency.contracts;
 import com.example.usuario.inventoryfragment.data.db.model.Dependency;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by usuario on 23/11/17.
@@ -13,6 +14,8 @@ public interface ListDependencyContract {
     interface View {
         void setPresenter(ListDependencyContract.Presenter presenter);
         void loadDependency(ArrayList<Dependency> dependencies);
+        Dependency getDependency(int position);
+        void closeActionMode();
     }
 
 
@@ -28,6 +31,10 @@ public interface ListDependencyContract {
         void clearSelecion();
 
         boolean isPositionChecked(int position);
+
+        Dependency getDependency(int position);
+
+        void checkedActionMode();
     }
 
     interface Interactor{

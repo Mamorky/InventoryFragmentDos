@@ -1,5 +1,7 @@
 package com.example.usuario.inventoryfragment.ui.dependency.presenters;
 
+import android.widget.AbsListView;
+
 import com.example.usuario.inventoryfragment.data.db.model.Dependency;
 import com.example.usuario.inventoryfragment.ui.dependency.interactors.ListDependencyInteractor;
 import com.example.usuario.inventoryfragment.ui.dependency.contracts.ListDependencyContract;
@@ -47,11 +49,13 @@ public class ListDependencyPresenter implements ListDependencyContract.Presenter
     @Override
     public void deleteSelection() {
         for(Integer position:selection.keySet()){
-            interactor.deleteDependency(position);
+            Dependency dependency = getDependency(position);
+            interactor.deleteDependency(dependency);
         }
     }
 
     HashMap<Integer,Boolean> selection = new HashMap<>();
+
     @Override
     public void removeSelection(int position) {
         selection.remove(position);
@@ -75,5 +79,15 @@ public class ListDependencyPresenter implements ListDependencyContract.Presenter
     @Override
     public boolean isPositionChecked(int position) {
         return selection.get(position) == null?false:true;
+    }
+
+    @Override
+    public Dependency getDependency(int position) {
+        return view.getDependency(position);
+    }
+
+    @Override
+    public void checkedActionMode() {
+        view.closeActionMode();
     }
 }

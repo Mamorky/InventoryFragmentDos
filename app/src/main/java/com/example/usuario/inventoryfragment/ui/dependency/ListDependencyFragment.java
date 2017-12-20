@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,6 +38,8 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
     private ListDependencyListener mCallback;
     private DependencyAdapter adapter;
     private FloatingActionButton fabAdd;
+
+    private DependencyMultiChoice dependencyMultiChoice;
 
     interface ListDependencyListener {
         void addNewDependency();
@@ -83,6 +86,7 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                closeActionMode();
                 mCallback.addNewDependency();
             }
         });
@@ -105,7 +109,8 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
             }
         });
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-        getListView().setMultiChoiceModeListener(new DependencyMultiChoice((ListDependencyPresenter) presenter));
+        dependencyMultiChoice = new DependencyMultiChoice((ListDependencyPresenter) presenter);
+        getListView().setMultiChoiceModeListener(dependencyMultiChoice);
 
 
         //Pulsación Larga del elemento
@@ -155,14 +160,8 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_list_depen_delete:
-                AdapterView.AdapterContextMenuInfo infoElement = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-                Bundle bundle = new Bundle();
-                Dependency dependencyTmp = DependencyRepository.getInstance().getDependencies().get(infoElement.position);
-                bundle.putString(CommonDialog.MESSAGE,"Desea eliminar la dependencia");
-                bundle.putString(CommonDialog.TITLE,"Eliminar Dependencia: "+dependencyTmp.getShortname());
-                bundle.putParcelable(CommonDialog.DEPSELECT,dependencyTmp);
-                Dialog dialog = CommonDialog.showConfirmDialog(bundle,getActivity(), presenter);
-                dialog.show();
+                presenter.deleteSelection();
+                presenter.loadDependency();
                 break;
             default:
                 super.onContextItemSelected(item);
@@ -181,4 +180,14 @@ public class ListDependencyFragment extends ListFragment implements ListDependen
         adapter.clear();
         adapter.addAll(dependencies);
     }
+
+    @Override
+    public Dependency getDependency(int position) {
+        return adapter.getItem(position);
+    }
+
+    @Override
+    public void closeActionMode() {
+        dependencyMultiChoice.removeActionMode();
+    };
 }
